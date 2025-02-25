@@ -295,7 +295,24 @@ SPEC_DEVICE_TRANS_MAP: dict = {
             }
         },
         'entity': 'bath-heater',
-    }
+    },
+    'electric-blanket': {
+        'required': {
+            'electric-blanket': {
+                'required': {
+                    'properties': {
+                        'on': {'read', 'write'},
+                        'target-temperature': {'read', 'write'}
+                    }
+                },
+                'optional': {
+                    'properties': {'mode', 'temperature'}
+                },
+            }
+        },
+        'optional': {},
+        'entity': 'electric-blanket'
+    },
 }
 
 """SPEC_SERVICE_TRANS_MAP
@@ -373,7 +390,9 @@ SPEC_SERVICE_TRANS_MAP: dict = {
         },
         'entity': 'cover'
     },
-    'window-opener': 'curtain'
+    'window-opener': 'curtain',
+    'motor-controller': 'curtain',
+    'airer': 'curtain'
 }
 
 """SPEC_PROP_TRANS_MAP
