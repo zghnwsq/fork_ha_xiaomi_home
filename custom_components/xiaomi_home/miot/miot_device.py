@@ -549,6 +549,10 @@ class MIoTDevice:
         # Optional actions
         # Optional events
         miot_service.platform = platform
+        # entity_category
+        if entity_category := SPEC_SERVICE_TRANS_MAP[service_name].get(
+            'entity_category', None):
+            miot_service.entity_category = entity_category
         return entity_data
 
     def parse_miot_property_entity(self, miot_prop: MIoTSpecProperty) -> bool:
@@ -587,13 +591,8 @@ class MIoTDevice:
             # Priority: spec_modify.unit > unit_convert > specv2entity.unit
             miot_prop.external_unit = SPEC_PROP_TRANS_MAP['properties'][
                 prop_name]['unit_of_measurement']
-        if (
-            not miot_prop.icon
-            and 'icon' in SPEC_PROP_TRANS_MAP['properties'][prop_name]
-        ):
-            # Priority: spec_modify.icon > icon_convert > specv2entity.icon
-            miot_prop.icon = SPEC_PROP_TRANS_MAP['properties'][prop_name][
-                'icon']
+        # Priority: default.icon when device_class is set > spec_modify.icon
+        #           > icon_convert
         miot_prop.platform = platform
         return True
 
@@ -899,6 +898,7 @@ class MIoTServiceEntity(Entity):
             self._attr_name = (
                 f'{"* "if self.entity_data.spec.proprietary else " "}'
                 f'{self.entity_data.spec.description_trans}')
+            self._attr_entity_category = entity_data.spec.entity_category
         # Set entity attr
         self._attr_unique_id = self.entity_id
         self._attr_should_poll = False

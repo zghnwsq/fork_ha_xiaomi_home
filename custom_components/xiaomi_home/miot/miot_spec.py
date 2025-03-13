@@ -56,7 +56,7 @@ from slugify import slugify
 
 # pylint: disable=relative-beyond-top-level
 from .const import DEFAULT_INTEGRATION_LANGUAGE, SPEC_STD_LIB_EFFECTIVE_TIME
-from .common import MIoTHttp, load_yaml_file
+from .common import MIoTHttp, load_yaml_file, load_json_file
 from .miot_error import MIoTSpecError
 from .miot_storage import MIoTStorage
 
@@ -471,7 +471,7 @@ class _MIoTSpecBase:
     iid: int
     type_: str
     description: str
-    description_trans: str
+    description_trans: Optional[str]
     proprietary: bool
     need_filter: bool
     name: str
@@ -482,6 +482,7 @@ class _MIoTSpecBase:
     device_class: Any
     state_class: Any
     external_unit: Any
+    entity_category: Optional[str]
 
     spec_id: int
 
@@ -500,6 +501,7 @@ class _MIoTSpecBase:
         self.device_class = None
         self.state_class = None
         self.external_unit = None
+        self.entity_category = None
 
         self.spec_id = hash(f'{self.type_}.{self.iid}')
 
@@ -843,6 +845,7 @@ class _MIoTSpecMultiLang:
     """MIoT SPEC multi lang class."""
     # pylint: disable=broad-exception-caught
     _DOMAIN: str = 'miot_specs_multi_lang'
+    _MULTI_LANG_FILE = 'specs/multi_lang.json'
     _lang: str
     _storage: MIoTStorage
     _main_loop: asyncio.AbstractEventLoop
@@ -898,6 +901,25 @@ class _MIoTSpecMultiLang:
         except Exception as err:
             trans_local = {}
             _LOGGER.info('get multi lang from local failed, %s, %s', urn, err)
+        # Revert: load multi_lang.json
+        try:
+            trans_local_json = await self._main_loop.run_in_executor(
+                None, load_json_file,
+                os.path.join(
+                    os.path.dirname(os.path.abspath(__file__)),
+                    self._MULTI_LANG_FILE))
+            urn_strs: list[str] = urn.split(':')
+            urn_key: str = ':'.join(urn_strs[:6])
+            if (
+                isinstance(trans_local_json, dict)
+                and urn_key in trans_local_json
+                and self._lang in trans_local_json[urn_key]
+            ):
+                trans_cache.update(trans_local_json[urn_key][self._lang])
+                trans_local = trans_local_json[urn_key]
+        except Exception as err:  # pylint: disable=broad-exception-caught
+            _LOGGER.error('multi lang, load json file error, %s', err)
+        # Revert end
         # Default language
         if not trans_cache:
             if trans_cloud and DEFAULT_INTEGRATION_LANGUAGE in trans_cloud:
@@ -1189,6 +1211,9 @@ class _SpecModify:
         if isinstance(self._selected, str):
             return await self.set_spec_async(urn=self._selected)
 
+    def get_prop_name(self, siid: int, piid: int) -> Optional[str]:
+        return self.__get_prop_item(siid=siid, piid=piid, key='name')
+
     def get_prop_unit(self, siid: int, piid: int) -> Optional[str]:
         return self.__get_prop_item(siid=siid, piid=piid, key='unit')
 
@@ -1210,6 +1235,13 @@ class _SpecModify:
         if not isinstance(value_range, list):
             return None
         return value_range
+
+    def get_prop_value_list(self, siid: int, piid: int) -> Optional[list]:
+        value_list = self.__get_prop_item(siid=siid, piid=piid,
+                                           key='value-list')
+        if not isinstance(value_list, list):
+            return None
+        return value_list
 
     def __get_prop_item(self, siid: int, piid: int, key: str) -> Optional[str]:
         if not self._selected:
@@ -1450,10 +1482,12 @@ class MIoTSpecParser:
                         key=':'.join(p_type_strs[:5]))
                     or property_['description']
                     or spec_prop.name)
-                if 'value-range' in property_:
-                    spec_prop.value_range = property_['value-range']
-                elif 'value-list' in property_:
-                    v_list: list[dict] = property_['value-list']
+                # Modify value-list before translation
+                v_list: list[dict] = self._spec_modify.get_prop_value_list(
+                    siid=service['iid'], piid=property_['iid'])
+                if (v_list is None) and ('value-list' in property_):
+                    v_list = property_['value-list']
+                if v_list is not None:
                     for index, v in enumerate(v_list):
                         if v['description'].strip() == '':
                             v['description'] = f'v_{v["value"]}'
@@ -1467,6 +1501,8 @@ class MIoTSpecParser:
                                 f'{v["description"]}')
                             or v['name'])
                     spec_prop.value_list = MIoTSpecValueList.from_spec(v_list)
+                if 'value-range' in property_:
+                    spec_prop.value_range = property_['value-range']
                 elif property_['format'] == 'bool':
                     v_tag = ':'.join(p_type_strs[:5])
                     v_descriptions = (
@@ -1491,6 +1527,10 @@ class MIoTSpecParser:
                     siid=service['iid'], piid=property_['iid'])
                 if custom_range:
                     spec_prop.value_range = custom_range
+                custom_name = self._spec_modify.get_prop_name(
+                    siid=service['iid'], piid=property_['iid'])
+                if custom_name:
+                    spec_prop.name = custom_name
             # Parse service event
             for event in service.get('events', []):
                 if (
