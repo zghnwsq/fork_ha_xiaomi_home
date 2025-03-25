@@ -76,3 +76,56 @@ urn:miot-spec-v2:device:air-conditioner:0000A004:xiaomi-m9:2: urn:miot-spec-v2:d
 urn:miot-spec-v2:device:air-conditioner:0000A004:xiaomi-m9:3: urn:miot-spec-v2:device:air-conditioner:0000A004:xiaomi-m9:6
 urn:miot-spec-v2:device:air-conditioner:0000A004:xiaomi-m9:4: urn:miot-spec-v2:device:air-conditioner:0000A004:xiaomi-m9:6
 urn:miot-spec-v2:device:air-conditioner:0000A004:xiaomi-m9:5: urn:miot-spec-v2:device:air-conditioner:0000A004:xiaomi-m9:6
+urn:miot-spec-v2:device:airer:0000A00D:mrbond-m33a:1:
+  prop.2.3:
+    name: current-position-a
+  prop.2.11:
+    name: current-position-b
+urn:miot-spec-v2:device:thermostat:0000A031:suittc-wk168:1:
+  prop.2.3:
+    value-list:
+    - value: 1
+      description: '1'
+    - value: 2
+      description: '2'
+    - value: 3
+      description: '3'
+    - value: 4
+      description: '4'
+    - value: 5
+      description: '5'
+    - value: 6
+      description: '6'
+    - value: 7
+      description: '7'
+    - value: 8
+      description: '8'
+    - value: 9
+      description: '9'
+    - value: 10
+      description: '10'
+    - value: 11
+      description: '11'
+    - value: 12
+      description: '12'
+    - value: 13
+      description: '13'
+    - value: 14
+      description: '14'
+    - value: 15
+      description: '15'
+    - value: 16
+      description: '16'
+urn:miot-spec-v2:device:outlet:0000A002:chuangmi-212a01:3:
+  prop.5.1:
+    expr: round(src_value*6/1000000, 3)
+urn:miot-spec-v2:device:outlet:0000A002:chuangmi-212a01:1: urn:miot-spec-v2:device:outlet:0000A002:chuangmi-212a01:3
+urn:miot-spec-v2:device:outlet:0000A002:chuangmi-212a01:2: urn:miot-spec-v2:device:outlet:0000A002:chuangmi-212a01:3
+urn:miot-spec-v2:device:plant-monitor:0000A030:hhcc-v1:1:
+    prop.2.1:
+      name: soil-moisture
+      icon: mdi:watering-can
+    prop.2.2:
+      name: soil-ec
+      icon: mdi:sprout-outline
+      unit: μS/cm
