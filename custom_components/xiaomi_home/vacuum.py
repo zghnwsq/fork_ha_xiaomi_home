@@ -160,7 +160,8 @@ class Vacuum(MIoTServiceEntity, StateVacuumEntity):
 
     async def async_start(self) -> None:
         """Start or resume the cleaning task."""
-        try: # VacuumActivity is introduced in HA core 2025.1.0
+        try:# VacuumActivity is introduced in HA core 2025.1.0
+            # pylint: disable=import-outside-toplevel
             from homeassistant.components.vacuum import VacuumActivity
             if (self.activity
                     == VacuumActivity.PAUSED) and self._action_continue_sweep:
@@ -230,6 +231,7 @@ class Vacuum(MIoTServiceEntity, StateVacuumEntity):
             return None
         status_value = self.get_map_value(map_=self._status_map, key=status)
         try:
+            # pylint: disable=import-outside-toplevel
             from homeassistant.components.vacuum import VacuumActivity
             status_value = status_value.lower()
             status_str = re.sub(r'[^a-z]', '', status_value)
