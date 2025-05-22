@@ -37,6 +37,8 @@ git checkout v1.0.0
 
 [![打开您的 Home Assistant 实例并打开 Home Assistant 社区商店内的米家集成。](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=XiaoMi&repository=ha_xiaomi_home&category=integration)
 
+或者，HACS > 在搜索框中输入 **Xiaomi Home** > 点击 **Xiaomi Home** ，进入集成详情页  > DOWNLOAD
+
 ### 方法 3：通过 [Samba](https://github.com/home-assistant/addons/tree/master/samba) 或 [FTPS](https://github.com/hassio-addons/addon-ftp) 手动安装
 
 下载并将 `custom_components/xiaomi_home` 文件夹复制到 Home Assistant 的 `config/custom_components` 文件夹下。
