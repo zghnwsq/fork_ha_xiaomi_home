@@ -230,6 +230,8 @@ class Vacuum(MIoTServiceEntity, StateVacuumEntity):
         if status is None:
             return None
         status_value = self.get_map_value(map_=self._status_map, key=status)
+        if status_value is None:
+            return None
         try:
             # pylint: disable=import-outside-toplevel
             from homeassistant.components.vacuum import VacuumActivity
