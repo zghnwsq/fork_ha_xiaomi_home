@@ -1,4 +1,29 @@
 {
+  "urn:miot-spec-v2:device:air-conditioner:0000A004:090615-ktf:1": [
+    {
+      "iid": 4,
+      "type": "urn:miot-spec-v2:service:environment:0000780A:090615-ktf:1",
+      "description": "Environment",
+      "properties": [
+        {
+          "iid": 2,
+          "type": "urn:miot-spec-v2:property:temperature:00000020:090615-ktf:1",
+          "description": "Temperature",
+          "format": "float",
+          "access": [
+            "read",
+            "notify"
+          ],
+          "unit": "celsius",
+          "value-range": [
+            -30,
+            100,
+            1
+          ]
+        }
+      ]
+    }
+  ],
   "urn:miot-spec-v2:device:airer:0000A00D:hyd-lyjpro:1": [
     {
       "iid": 3,
@@ -8,6 +33,185 @@
         {
           "iid": 2,
           "type": "urn:miot-spec-v2:property:on:00000006:hyd-lyjpro:1",
+          "description": "Switch Status",
+          "format": "bool",
+          "access": [
+            "read",
+            "write",
+            "notify"
+          ]
+        }
+      ]
+    }
+  ],
+  "urn:miot-spec-v2:device:thermostat:0000A031:tofan-wk01:1:0000C822": [
+    {
+      "iid": 2,
+      "type": "urn:miot-spec-v2:service:thermostat:0000784A:tofan-wk01:1",
+      "description": "Thermostat",
+      "properties": [
+        {
+          "iid": 1,
+          "type": "urn:miot-spec-v2:property:on:00000006:tofan-wk01:1",
+          "description": "Switch Status",
+          "format": "bool",
+          "access": [
+            "read",
+            "write",
+            "notify"
+          ]
+        },
+        {
+          "iid": 2,
+          "type": "urn:miot-spec-v2:property:mode-a:00000008:tofan-wk01:1",
+          "description": "Mode",
+          "format": "uint8",
+          "access": [
+            "read",
+            "write",
+            "notify"
+          ],
+          "value-list": [
+            {
+              "value": 0,
+              "description": "Auto"
+            },
+            {
+              "value": 1,
+              "description": "Cool"
+            },
+            {
+              "value": 2,
+              "description": "Heat"
+            },
+            {
+              "value": 3,
+              "description": "Fan"
+            },
+            {
+              "value": 4,
+              "description": "Dry"
+            }
+          ]
+        },
+        {
+          "iid": 3,
+          "type": "urn:miot-spec-v2:property:fault:00000009:tofan-wk01:1",
+          "description": "Device Fault",
+          "format": "uint8",
+          "access": [
+            "read",
+            "notify"
+          ],
+          "value-list": [
+            {
+              "value": 0,
+              "description": "No Faults"
+            }
+          ]
+        },
+        {
+          "iid": 4,
+          "type": "urn:miot-spec-v2:property:target-temperature:00000021:tofan-wk01:1",
+          "description": "Target Temperature",
+          "format": "uint8",
+          "access": [
+            "read",
+            "write",
+            "notify"
+          ],
+          "unit": "celsius",
+          "value-range": [
+            16,
+            35,
+            1
+          ]
+        }
+      ],
+      "actions": [
+        {
+          "iid": 1,
+          "type": "urn:miot-spec-v2:action:toggle:00002811:tofan-wk01:1",
+          "description": "Toggle",
+          "in": [],
+          "out": []
+        }
+      ]
+    },
+    {
+      "iid": 4,
+      "type": "urn:miot-spec-v2:service:air-conditioner:0000780F:tofan-wk01:1",
+      "description": "Air Conditioner",
+      "properties": [
+        {
+          "iid": 1,
+          "type": "urn:miot-spec-v2:property:on:00000006:tofan-wk01:1",
+          "description": "Switch Status",
+          "format": "bool",
+          "access": [
+            "read",
+            "write",
+            "notify"
+          ]
+        },
+        {
+          "iid": 2,
+          "type": "urn:miot-spec-v2:property:target-temperature:00000021:tofan-wk01:1",
+          "description": "Target Temperature",
+          "format": "uint8",
+          "access": [
+            "read",
+            "write",
+            "notify"
+          ],
+          "unit": "celsius",
+          "value-range": [
+            16,
+            32,
+            1
+          ]
+        },
+        {
+          "iid": 3,
+          "type": "urn:miot-spec-v2:property:fan-level:00000016:tofan-wk01:1",
+          "description": "Fan Level",
+          "format": "uint8",
+          "access": [
+            "read",
+            "write",
+            "notify"
+          ],
+          "value-list": [
+            {
+              "value": 0,
+              "description": "Auto"
+            },
+            {
+              "value": 2,
+              "description": "Low"
+            },
+            {
+              "value": 3,
+              "description": "Medium"
+            },
+            {
+              "value": 4,
+              "description": "High"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "urn:miot-spec-v2:device:water-heater:0000A02A:viomi-m1:2": [
+    {
+      "iid": 2,
+      "type": "urn:miot-spec-v2:service:switch:0000780C:viomi-m1:1",
+      "description": "Water Heater",
+      "properties": [
+        {
+          "iid": 6,
+          "type": "urn:miot-spec-v2:property:on:00000006:viomi-m1:1",
           "description": "Switch Status",
           "format": "bool",
           "access": [

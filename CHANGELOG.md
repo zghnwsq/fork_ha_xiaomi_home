@@ -1,4 +1,48 @@
 # CHANGELOG
+## v0.4.0
+### Added
+- Add the watch as the device tracker entity. [#1189](https://github.com/XiaoMi/ha_xiaomi_home/pull/1189)
+- Add the wifi speaker and the television as the media player entity. [#706](https://github.com/XiaoMi/ha_xiaomi_home/pull/706)
+- Add an option in CONFIGURE to set the cover closed position. [#1242](https://github.com/XiaoMi/ha_xiaomi_home/pull/1242)
+- Add notifications to show the status of the local connection to the central hub gateway. [#1280](https://github.com/XiaoMi/ha_xiaomi_home/pull/1280)
+- Import the device from the third party cloud. [#1258](https://github.com/XiaoMi/ha_xiaomi_home/pull/1258)
+### Changed
+- Add an alongside switch entity for viomi.waterheater.m1. [#1255](https://github.com/XiaoMi/ha_xiaomi_home/pull/1255)
+- Do not subscribe BLE device online/offline state message. [#1264](https://github.com/XiaoMi/ha_xiaomi_home/pull/1264)
+### Fixed
+- Keep the first element of the discovered ip address list as the recently added address when getting mdns result. [#1250](https://github.com/XiaoMi/ha_xiaomi_home/pull/1250)
+- Subscribe local topics every time when connected to the central hub gateway. [#1266](https://github.com/XiaoMi/ha_xiaomi_home/pull/1266)
+- Record the "closing" and "closed" status that occur frequently in the motor-controller, the window-opener and the curtain service. [#1262](https://github.com/XiaoMi/ha_xiaomi_home/pull/1262)
+- Fix xiaomi.aircondition.c24 total power consumption unit, adp.motor.adswb4 motor switch, cgllc.airm.cgd1st environment temperature, and shhf.light.sflt11 fan switch status. [#1256](https://github.com/XiaoMi/ha_xiaomi_home/pull/1256)
+
+## v0.3.4
+### Added
+- Exclude the unsupported device models. [#1205](https://github.com/XiaoMi/ha_xiaomi_home/pull/1205)
+### Changed
+- Subscribe the BLE device upstream messages even though the device is offline. [#1207](https://github.com/XiaoMi/ha_xiaomi_home/pull/1207)
+- Record "opening", "closing" and "closed" status of the airer service that occur frequently and do not record "stop" status for the cover entity. [#1235](https://github.com/XiaoMi/ha_xiaomi_home/pull/1235)
+- Modify README about spec_filter.yaml and the event attributes. [#1237](https://github.com/XiaoMi/ha_xiaomi_home/pull/1237)
+### Fixed
+- Fix the reconnect delay time to be reset when the client is connected to the broker. [#1200](https://github.com/XiaoMi/ha_xiaomi_home/pull/1200)
+- Fix the HA warning in the logs related to vacuum state setting. [#694](https://github.com/XiaoMi/ha_xiaomi_home/pull/694)
+- Fix the operation mode when the device does not have a mode property. [#1199](https://github.com/XiaoMi/ha_xiaomi_home/pull/1199)
+- Fix 090615.aircondition.ktf environment temperature. [#1210](https://github.com/XiaoMi/ha_xiaomi_home/pull/1210)
+- Fix a missing variable in translation it.json. [#1215](https://github.com/XiaoMi/ha_xiaomi_home/pull/1215)
+- Fix yutai.plug.fsov8m power consumption and ignore bjkcz.curtain.kczble curtain status. [#1236](https://github.com/XiaoMi/ha_xiaomi_home/pull/1236)
+
+## v0.3.3
+### Changed
+- Change the log level of error "mips unsub internal error, 4, None". [#1135](https://github.com/XiaoMi/ha_xiaomi_home/pull/1135)
+- Add necessary logs for distinguishing the set_properties command source. [#1160](https://github.com/XiaoMi/ha_xiaomi_home/pull/1160)
+### Fixed
+- Fix tofan.airrtc.wk01 thermostat and air conditioner service. [#1160](https://github.com/XiaoMi/ha_xiaomi_home/pull/1160)
+- Fix mrbond.airer.m1t closing status. [#1134](https://github.com/XiaoMi/ha_xiaomi_home/pull/1134)
+- Fix the MIoT-Spec-V2 of xiaomi.fan.p69 fan service, ainice.sensor_occupy.3b people number, cykj.hood.jyj22 ventilation switch status, xiaomi.fan.p43 fan level, zhimi.airp.ua1a pm10 density, 090615.switch.x1tpm switch status, dmaker.fan.p33 fan-level. [#1132](https://github.com/XiaoMi/ha_xiaomi_home/pull/1132)
+- Fix cubee.airrtc.th123e and cubee.airrtc.th123w MIoT-Spec-V2 instance descriptions in Russian.
+- Fix ijai.vacuum.v1 suction-state value-list descriptions in Chinese.
+- Fix the misuse of Chinese brackets in multi_lang.json.
+- The unit of the humidity-range property of xiaomi.aircondition.mt0, xiaomi.aircondition.c35, xiaomi.aircondition.c24 and xiaomi.aircondition.c20 is "none". [#1187](https://github.com/XiaoMi/ha_xiaomi_home/pull/1187)
+
 ## v0.3.2
 > Xiaomi Home has been added to the Home Assistant Community Store (HACS) as a default since May 8, 2025.
 ### Added
